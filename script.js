@@ -5,7 +5,7 @@ function explainCode() {
     const btn = document.getElementById("explainBtn");
     const loader = document.getElementById("loader");
     const output = document.getElementById("output");
-
+    // alert(code)
     if (!code) {
         alert("Please paste some code first.");
         return;
@@ -29,25 +29,26 @@ function explainCode() {
     })
     .then(res => res.text())
     .then(data => {
-        output.innerHTML = `
-            <div class="card">
-                <div class="hint">
-                     Snippet #${snippetId} 
-                </div>
+    output.innerHTML = `
+                <div class="card">
+                    <div class="hint">
+                        Snippet #${snippetId} 
+                    </div>
 
-                <div class="code-preview" onclick="toggleCode(${snippetId})">
-                    ${escapeHtml(preview)}
-                </div>
+                    <div class="code-preview" onclick="toggleCode(${snippetId})">
+                        ${escapeHtml(preview)}
+                    </div>
 
-                <pre class="full-code" id="code-${snippetId}">
+                    <pre class="full-code" id="code-${snippetId}">
         ${escapeHtml(code)}
-                </pre>
+                    </pre>
 
-                <pre>${escapeHtml(data)}</pre>
-            </div>
-        ` + output.innerHTML;
-
-    })
+                    <div class="ai-output">
+                        ${marked.parse(data)}
+                    </div>
+                </div>
+            ` + output.innerHTML;
+        })
     .catch(() => {
         alert("Error while explaining code");
     })
